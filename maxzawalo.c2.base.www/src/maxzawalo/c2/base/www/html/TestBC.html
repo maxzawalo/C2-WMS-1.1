@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="js/date.format.js"></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/BizControl.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="icon" type="image/png" href="/img/app_48_48.png" />
+<title>Документ</title>
+</head>
+<body>
+	<input id="count" type="text" />
+	<script type="text/javascript">
+		var obj = {};
+		obj.count = 0;
+
+		var controls = [];
+		controls.push(new BizControl("count", "count"));
+
+		for (var i = 0; i < controls.length; i++)
+			controls[i].SetData(obj);
+	</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="js/date.format.js"></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/BizControl.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="icon" type="image/png" href="/img/app_48_48.png" />
+<title>Документ</title>
+</head>
+<body>
+	<table>
+		<tr id="top_panel">
+			<td><script type="text/javascript">
+				var controls = [];
+
+				function AfterGetPagesCount(count) {
+					var html = "";
+					for (var p = count; p > 0; p--)
+						html += "<a class='page' href='DocListForm.html?class=__class&page="+p+"'>" + p + "</a>";
+
+					$("#pages").html(html);
+
+					//alert(count);
+				}
+				LoadBO("api/__class.GetPagesCount", AfterGetPagesCount);
+
+				function AfterLoadModel(model) {
+					LoadTable("TableDocList", "api/__class.List?page=__page",
+							model);
+
+					
+
+					$(document)
+							.on(
+									"dblclick",
+									"#TableDocList tr",
+									function(e) {
+										if (e.ctrlKey) {
+											console
+													.log("ctr key was pressed during the click");
+										}
+										//window.location = url;
+										window
+												.open("DocForm.html?class=__class&id="
+														+ $(this).attr('bo_id'));
+
+									});
+
+					$(document).on("click", "#TableDocList td", function(e) {
+						if (e.ctrlKey) {
+							//alert("ctr key was pressed during the click");
+						} else {
+							//alert("click");
+						}
+						//window.location = url;
+						//window.open("DocForm.html?class=__class&id="  + $(this).attr('bo_id'));
+					});
+
+					$(document).on("click", "#TableDocList tr", function(e) {
+						var selected = $(this).hasClass("highlight");
+						$("#TableDocList tr").removeClass("highlight");
+						if (!selected)
+							$(this).addClass("highlight");
+					});
+				}
+				LoadBO("api/__class.DocListModel", AfterLoadModel);
+			</script></td>
+		</tr>
+		<tr id="middle_panel">
+			<td>
+				<div style="width: 100%;">
+					<table id="TableDocList" class="TablePart">
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr id="bottom_panel">
+			<td>
+				<div id="pages"></div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

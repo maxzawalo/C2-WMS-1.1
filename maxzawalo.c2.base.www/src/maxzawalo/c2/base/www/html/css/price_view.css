@@ -1,0 +1,18 @@
+input {
+	font-size: 40px;
+}
+
+table {
+	width: 90%;
+	font-size: 32px;
+	margin-top: 10%;
+	margin-left: 5%;
+}
+
+td {
+	text-align: center;
+}
+
+.zero_count {
+	color: #bbb;
+}

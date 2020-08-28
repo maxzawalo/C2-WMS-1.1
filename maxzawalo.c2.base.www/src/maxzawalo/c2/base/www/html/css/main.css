@@ -1,0 +1,133 @@
+html {
+    text-align: center;
+    width: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    font-family: Helvetica, Arial, sans serif;
+    font-size: 12pt;
+    /* sel */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+div {
+    /*    border: 1px solid black;*/
+
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ui-tabs-nav {
+    margin: 0; /* Обнуляем значение отступов */
+    padding: 4px; /* Значение полей */
+    text-align: left;
+}
+
+.ui-tabs-nav a {
+    color: black;
+    text-decoration: none;
+}
+
+.ui-tabs-tab {
+    display: inline; /* Отображать как строчный элемент */
+    margin-right: 0px; /* Отступ слева */
+    border: 1px solid #000; /* Рамка вокруг текста */
+    padding: 5px; /* Поля вокруг текста */
+    border-radius: 5px 5px 0 0;
+}
+
+.TablePart td {
+    border: 1px solid black;
+    text-align: right;
+}
+
+.TablePart th {
+    border: 1px solid black;
+}
+
+.modal {
+    display: none; /*Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 90%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+}
+
+td[name=product] {
+    text-align: left;
+}
+
+td[name=units] {
+    text-align: center;
+}
+
+#contractors td {
+    text-align: left;
+}
+
+#contractors tr {
+    height: 100px;
+}
+
+#contractor_name, #contractor_name_bottom {
+    color: gray;
+    font-size: 50px;
+}
+
+.highlight {
+    background-color: rgb(200, 200, 200);
+}
+
+.page {
+    display: block;
+    float: left;
+    color: black;
+    width: 20pt;
+    height: 15pt;
+    color: gray;
+    border: 1px solid black;
+    margin: 2px;
+    vertical-align: middle;
+}
+
+.select_report {
+    display: block;
+    border: 1px solid black;
+    width: 70pt;
+    text-align: left;
+    cursor: pointer;
+}
+
+.select_report:hover {
+    background-color: rgb(200, 200, 200);
+}
+
+.select_report:active {
+    background-color: white;
+}
+
+.biz_control {
+    border: none;
+    text-align: right;
+    font-size: 12pt;
+    max-width: 50pt;
+}

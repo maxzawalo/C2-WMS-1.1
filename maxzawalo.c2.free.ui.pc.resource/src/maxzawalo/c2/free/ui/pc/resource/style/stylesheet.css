@@ -1,0 +1,8 @@
+﻿.chart-plot-background {
+    -fx-background-color: #ffffff;
+}
+
+.default-color0.chart-series-line {
+ -fx-stroke: #00ff00;
+ -fx-stroke-width: 1px;
+}

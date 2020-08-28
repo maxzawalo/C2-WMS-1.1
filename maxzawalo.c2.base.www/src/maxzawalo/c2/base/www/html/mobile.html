@@ -1,0 +1,82 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/main.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/price_view.css" media="screen" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<title></title>
+</head>
+<body>
+	<script>
+	function getScan() {
+	    var href = window.location.href;
+
+	    var params = href.split("/");
+	    var url = "zxing://scan/";//?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+	    url += "?ret=" + encodeURIComponent("http://" + params[2] + "/api/bar?code={CODE}");
+	    //alert(url);
+	    if (navigator.userAgent.match(/Firefox/i)) {
+		//Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+		window.location.href = url;
+	    } else {
+		//Used for Chrome. If Firefox uses this, it leaves the scan window open.
+		window.open(url);
+	    }
+	}
+    </script>
+    __post_message
+	<div style="width: 100%; text-align: right;">
+		<img src="/img/start_qr.gif" style="height: 100pt; cursor: hand; padding: 20pt 20pt 0 0;" onclick="getScan()" title="Сканировать штрихкод" />
+	</div>
+	<br>
+	<br>
+
+	<div style="text-align: center;">
+		<span id="product_name" style="font-size: 32px;"></span><br> <br> <span id="units" style="font-size: 40px;"></span><br> <br>
+
+
+		<div style="width: 90%; text-align: right; margin-left: 5%;">
+			<span id="total" style="font-size: 60px;"></span>
+		</div>
+
+	</div>
+
+		</br> </br> </br> </br> </br> <img id="big_img" style="height: 0;" onClick="HideBig(this)"></br> </br> </br>
+
+
+		<form enctype="multipart/form-data" method="post">
+			<input type="hidden" name="product_id" value="product_id" /> 
+			<input id="btn_select_image" type="button" value="Выберите изображение" /> 
+			<input id="image" type="file" name="image"
+				accept="image/*;capture=camera" style="display: none;" /></br> </br> </br> </br> </br>
+			<!-- 		<input type="text" x-webkit-speech> -->
+			</br> <input type="hidden" name="submit_image" value="" />
+			<!-- 			<input type="submit" name="submit_image" value="Отправить" /> -->
+			<h5>
+				<a id="upload_image_block"></a>
+			</h5>
+		</form>
+			<script type="text/javascript">
+	    function AfterLoadProduct(p) {
+		$("#product_name").html(p.full_name);
+	    }
+
+	    //LoadBO("api/catalogue.get?class=Product&id=1", AfterLoadProduct);
+
+	    function AfterLoadPice(p) {
+		//127.0.0.1:9194/api/bar?code=00-0027298
+		//127.0.0.1:9194/api/bar?code=00272988
+		$("#product_name").html(p.product.full_name);
+		$("#units").html(p.product.units.name);
+		$("#total").html(p.total.toFixed(2) + " руб");
+		//"price": 11.04, "total": 13.3, "product":
+	    }
+
+	    LoadBO("api/catalogue.get?class=Price&code=__price_code", AfterLoadPice);
+	    //product_price
+	</script>
+</body>
+</html>

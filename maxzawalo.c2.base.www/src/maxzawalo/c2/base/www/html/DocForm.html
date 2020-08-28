@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/date.format.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/BizControl.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/png" href="/img/app_48_48.png"/>
+    <title>Документ</title>
+</head>
+<body>
+<table>
+    <tr id="top_panel">
+        <td>
+            <div style="width: 100%; text-align: left;">
+                <a href="DocListForm.html?class=__class" target="_blank">Список
+                    документов</a></br> </br>
+            </div>
+            <input id="code" class='biz_control' type="text"/> <input id="DocDate" type="text"/>
+            <input id="contractor" class='biz_control' type="text"/>
+            <script
+                    type="text/javascript">
+                function afterLoadTable() {
+                    $('.biz_control').each(function () {
+                        if (this.id.indexOf("TablePartProduct") != -1) {
+                            var ctrl = new BizControl(this.id, this.id);
+                            ctrl.format = $(this).attr("format");
+                            ctrl.field_name = $(this).attr("field_name");
+//                          ctrl.type = "string";
+                            ctrl.setEvents();
+                            ctrl.setValue($(this).val());
+                            controls.push(ctrl);
+//                        console.log(this.id);
+                        }
+                    });
+                }
+
+                var controls = [];
+
+                function AfterLoadTPModel(model) {
+                    LoadTable("TablePartProduct",
+                        "api/__class.TablePartProduct?doc_id=__id",
+                        model, afterLoadTable);
+                    LoadTable("TablePartService",
+                        "api/__class.TablePartService?doc_id=__id",
+                        model, afterLoadTable);
+
+//                    $(document).on("click", "#TablePartProduct td", function (e) {
+//                        var col = $(this).index();
+//                        var $tr = $(this).closest('tr');
+//                        var row = $tr.index();
+//                        alert('Row: ' + row + ', Column: ' + col);
+//                    });
+                }
+            </script>
+        </td>
+    </tr>
+    <tr id="middle_panel">
+        <td>
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1">Товары</a></li>
+                    <li><a href="#tabs-2">Услуги</a></li>
+                    <li><a href="#tabs-3">БСО</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <div style="width: 100%;">
+                        <table id="TablePartProduct" class="TablePart">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    <div style="width: 80%;">
+                        <table id="TablePartService" class="TablePart">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="tabs-3">БСО</div>
+            </div>
+        </td>
+    </tr>
+    <tr id="bottom_panel">
+        <script type="text/javascript">
+            var reports = [];
+
+            function AfterLoadReports(r) {
+                reports = r;
+                if (reports.length != 0) {
+                    $("#print_btn").css("visibility", "visible");
+                    var btns = "";
+                    for (var i = 0; i < reports.length; i++)
+                        btns += "<a class='select_report' onclick='Print(\""
+                            + reports[i][0]
+                            + "\")'>"
+                            + reports[i][1]
+                            + "</a>";
+                    $("#print_menu").html(btns);
+                }
+            }
+
+            function AfterPrintDoc(mess) {
+                alert(mess);
+                $("body").css("cursor", "default");
+            }
+
+            function Print(report_name) {
+                if (reports.length != 0) {
+                    $("body").css("cursor", "progress");
+                    RunFunc(
+                        "api/document.print?class=__class&id=__id&report_name="
+                        + report_name, AfterPrintDoc);
+                    $("#print_menu").css("display", "none");
+
+                }
+            }
+
+            function ShowPrintMenu() {
+                if (reports.length == 1)
+                    Print(reports[0][0]);
+                else
+                    $("#print_menu").css("display", "block");
+            }
+        </script>
+        <td>
+            <div style="text-align: left;">
+                <div id="print_menu" style="display: none;"></div>
+                <div>
+                    <div style="text-align: left; float: left;">
+                        <button id="print_btn"
+                                style="width: 70pt; height: 30pt; visibility: hidden;"
+                                onclick="ShowPrintMenu()">Печать
+                        </button>
+                    </div>
+                    <div style="text-align: right; float: right;">
+                        <br> НДС<input id="totalVat" type="text"/>Сумма<input
+                            id="total" type="text"/>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $("#tabs").tabs();
+
+    LoadBO("api/document.get_reports?class=__class", AfterLoadReports);
+
+    function AfterLoadDoc(obj) {
+        var code = new BizControl("code", "code");
+        code.type = "string";
+        controls.push(code);
+
+        controls.push(new BizControl("total", "total"));
+        controls.push(new BizControl("totalVat", "totalVat"));
+
+        for (var i = 0; i < controls.length; i++)
+            controls[i].SetData(obj);
+        //$("#code").val(obj.code);
+        if (obj.contractor != null)
+            $("#contractor").val(obj.contractor.name);
+
+        var DocDate = new Date();
+        DocDate.setTime(obj.DocDate);
+        $("#DocDate").val(DocDate.format("dd.mm.yyyy"));
+
+        LoadBO("api/__class.TPModel", AfterLoadTPModel)
+    }
+
+    LoadBO("api/document.get?class=__class&id=__id", AfterLoadDoc)
+</script>
+</body>
+</html>
