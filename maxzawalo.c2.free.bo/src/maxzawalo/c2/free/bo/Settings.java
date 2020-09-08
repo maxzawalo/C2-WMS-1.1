@@ -29,6 +29,8 @@ public class Settings {
 		myFirm.full_name = "My Co";
 		myFirm.name = "My Co";
 		myFirm.legal_address = "My street";
+		settings = new HashMap<String, String>();
+		Load();
 	}
 
 	public static Coworker ChiefAccounting = new Coworker();
@@ -63,12 +65,12 @@ public class Settings {
 		return false;
 	}
 
-	static Map<String, String> settings = new HashMap<String, String>();
+	static Map<String, String> settings;// = new HashMap<String, String>();
 	// TODO: app.settings | сохраняемые настройки пользователя
 	public static boolean enableSuggestor = false;
 	public final static int maxLevel = 5;
 
-	public static void Load() {
+	static void Load() {
 		String data = FileUtils.readFileAsString(FileUtils.getAppDir() + "app.settings");
 
 		for (String line : data.split("[\\r\\n]+")) {

@@ -45,15 +45,15 @@ public class User extends CatalogueBO<User> {
 	// TODO: factory
 	public boolean isAdmin() {
 		// TODO
-		return (("" + this).contains("Линник") || ("" + this).contains("Завало"));
+		return (("" + this).contains("root"));
 	}
 
 	public boolean isSimple() {
 		// TODO
-		return ("" + this).contains("Белоусов");
+		return ("" + this).contains("simple");
 	}
 
 	public boolean isDirector() {
-		return (("" + this).contains("Шимак"));
+		return (("" + this).contains("director"));
 	}
 }

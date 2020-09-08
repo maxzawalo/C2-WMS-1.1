@@ -60,7 +60,7 @@ public class Main {
 		if (!DbHelper.CheckEnums())
 			System.exit(0);
 
-		Settings.isDesignTime = false;
+		// Settings.isDesignTime = false;
 
 		// -Duser.timezone=Europe/Minsk
 		System.out.println("" + new Date().getTime());
@@ -69,21 +69,16 @@ public class Main {
 
 		System.out.println("" + new Date().getTime());
 
-		Settings.Load();
-
-		String strDbUser = "root"; // database loging username
-		String strDbPassword = "root"; // database login password
-
 		Initialization.Do();
-		
+
 		//
 		// if (false)
 		{
 			// preparedstatement = con.prepareStatement(query);
 			// preparedstatement.setQueryTimeout(seconds);
-			
+
 			int nLocalPort = 3306;
-			DbHelper.connectionString = "jdbc:mysql://" + Settings.get("server") + ":" + nLocalPort 
+			DbHelper.connectionString = "jdbc:mysql://" + Settings.get("server") + ":" + nLocalPort
 					+ "/warehouse?connectTimeout=60000&socketTimeout=60000&allowMultiQueries=true&autoReconnect=true&user=root&password=root";
 
 			System.out.println("license");
@@ -97,7 +92,21 @@ public class Main {
 			}
 
 			try {
-				DbHelper.Alter(new Class[] { Coworker.class, User.class });
+				if (new CoworkerFactory().GetAll() == null) {
+					// Deploy {
+					DbHelper.Alter(Global.dbClasses);
+					// Coworker c = new Coworker();
+					// c.name = "root";
+
+					User u = new User();
+					u.name = "root";
+					UserFactory uf = new UserFactory();
+					u.password = uf.CreatePasswordHash("root");
+					uf.Save(u);
+				} else {
+					// Обновляем таблицы Coworker и User
+					DbHelper.Alter(new Class[] { Coworker.class, User.class });
+				}
 			} catch (SQLException e) {
 				log.FATAL("main", e);
 				JOptionPane.showMessageDialog(null, "Нет связи с сервером.", "Ошибки", JOptionPane.ERROR_MESSAGE);
@@ -127,7 +136,7 @@ public class Main {
 				try {
 					DbHelper.Alter(Global.dbClasses);
 				} catch (Exception e1) {
-					
+
 					e1.printStackTrace();
 				}
 			}

@@ -658,7 +658,7 @@ public class MainFormFull extends JFrame {
 		// tabbedPane.addTab("Прокат", null, new RentPanel(), null);
 		tabbedPane.addTab("Справочники", null, panelCats, null);
 		tabbedPane.addTab("Отчеты", null, panelReport, null);
-		if (Settings.isDesignTime || User.current.isAdmin()) {
+		if (User.current.isAdmin()) {
 			tabbedPane.addTab("Админ", null, panelAdmin, null);
 		}
 	}
