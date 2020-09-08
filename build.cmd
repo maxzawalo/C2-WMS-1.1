@@ -49,7 +49,9 @@ call mvn -f "C2 Full/pom.xml" -Dmaven.repo.local=%mvn_home% package
 
 mkdir "PRODUCTION/lib/"
 copy "C2 Full/target/lib/" "PRODUCTION/lib/" /b /y
-copy "C2 Full\target\full.ui.pc-0.0.1.jar" "PRODUCTION/" /b /y
-copy "C2 Full\app.settings" "PRODUCTION/app.settings" /b /y
+copy "C2 Full\target\full.ui.pc-*.jar" "PRODUCTION/" /b /y
+copy "C2 Full\app.settings" "PRODUCTION/" /b /y
+copy "C2 Full\wms.bat" "PRODUCTION/" /b /y
+
 
 pause

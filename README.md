@@ -23,7 +23,7 @@
 Запускаем build.cmd (только вначале исправьте пути на свои).
 
 #### Запуск приложения 
-В папке PRODUCTION командой javaw -jar full.ui.pc-0.0.1.jar
+В папке PRODUCTION запускаем wms.cmd
 
 #### Контакты
 Блог https://vk.com/c2_wms
