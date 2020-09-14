@@ -65,7 +65,7 @@ public class Main {
 		if (!DbHelper.CheckEnums())
 			System.exit(0);
 
-		Settings.Load();
+//		Settings.Load();
 		{
 			// connectionString = "jdbc:mysql://" + Settings.get("server")
 			// +

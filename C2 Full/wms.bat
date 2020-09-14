@@ -1,0 +1,1 @@
+javaw -jar full.ui.pc-0.0.2.jar
